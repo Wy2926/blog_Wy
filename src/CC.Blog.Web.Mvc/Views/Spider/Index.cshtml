@@ -1,0 +1,108 @@
+﻿@using CC.Blog.Web.Startup
+@using Abp.Application.Services.Dto
+@using CC.Blog.Web.Views.Shared.Components.Paging
+@model PagedResultDto<CC.Blog.Spiders.Spider>
+@{
+    ViewBag.CurrentPageName = PageNames.SearchSpiderHistory; // The menu item will be active for this page.
+}
+@section scripts
+    {
+    <environment names="Development">
+        <script src="~/view-resources/Views/Spider/index.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Spider/index.min.js" asp-append-version="true"></script>
+    </environment>
+}
+<div class="row">
+    <form name="select" method="get" action=@Url.Action("Index","Spider")>
+        <div class='col-sm-3'>
+            <div class="form-group">
+                <label>开始时间：</label>
+                <!--指定 date标记-->
+                <div class='input-group date' id='datetimepicker1'>
+                    <input type='text' class="form-control" name="startTime" value="@Context.Request.Query["startTime"]" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class='col-sm-3'>
+            <div class="form-group">
+                <label>结束时间：</label>
+                <!--指定 date标记-->
+                <div class='input-group date' id='datetimepicker2'>
+                    <input type='text' class="form-control" name="endTime" value="@Context.Request.Query["endTime"]" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class='col-sm-3'>
+            <div class="form-group">
+                <label>指定地址：</label>
+                <input type='text' class="form-control" name="Url" value="@Context.Request.Query["Url"]" />
+            </div>
+        </div>
+        <div class='col-sm-3'>
+            <div class="form-group">
+                <label>搜索引擎：</label>
+                <input type='text' class="form-control" name="Name" value="@Context.Request.Query["Name"]" />
+                <button type="submit" class="btn btn-primary waves-effect">@L("查询")</button>
+                <button class="btn btn-primary waves-effect" id="clearHis">@L("清除记录")</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="row clearfix dataTable">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    @L("蜘蛛历史")
+                </h2>
+                <ul class="header-dropdown m-r--5">
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a id="RefreshButton" href="javascript:void(0);" class="waves-effect waves-block"><i class="material-icons">refresh</i>@L("Refresh")</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="body table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>@L("选择")</th>
+                            <th>@L("蜘蛛类型")</th>
+                            <th>@L("访问地址")</th>
+                            <th>@L("IP地址")</th>
+                            <th>@L("状态码")</th>
+                            <th>@L("CreationTime")</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var spider in Model.Items)
+                        {
+                            <tr data-spiderId="@spider.Id">
+                                <td><input type="checkbox" name="IsEnable" value="true" class="filled-in" data-spiderId="@spider.Id" /></td>
+                                <td>@spider.Name</td>
+                                <td>@spider.Url</td>
+                                <td>@spider.Ip</td>
+                                <td>@spider.Code</td>
+                                <td>@spider.CreationTime</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    @await Component.InvokeAsync(typeof(PagingViewComponen))
+</div>
+

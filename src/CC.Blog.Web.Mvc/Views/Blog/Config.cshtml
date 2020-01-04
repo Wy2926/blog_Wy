@@ -1,0 +1,178 @@
+﻿@using CC.Blog.Web.Startup
+@model CC.Blog.Blogs.DTO.BlogSiteConfig
+@{
+    ViewBag.CurrentPageName = PageNames.BlogSiteConfig; // The menu item will be active for this page.
+}
+@section scripts
+    {
+    <environment names="Development">
+        <script src="~/view-resources/Views/Blog/config.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Blog/config.min.js" asp-append-version="true"></script>
+    </environment>
+}
+<style>
+    .aui-content-img-box .aui-up-img .aui-file-up {
+        width: 130px;
+        height: 130px;
+    }
+
+    .aui-file-up .add-img {
+        display: block;
+        width: 200px;
+        height: 200px;
+        border: 1px dashed #ddd;
+        border-radius: 3px;
+        cursor: pointer;
+        vertical-align: middle
+    }
+
+    .aui-file-up .file {
+        /*width: 100%;
+        height: 100%;*/
+        display:none;
+        opacity: 0;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        z-index: 100;
+        cursor: pointer;
+    }
+</style>
+<div id="BlogSiteConfigEditModal" tabindex="-1" role="dialog" aria-labelledby="ArticleCreateModalLabel" data-backdrop="static">
+    <div role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>@L("修改博客站点")</span>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form name="articleTypeCreateForm" role="form" novalidate class="form-validation">
+                    <div class="row clearfix">
+                        <div class="col-sm-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input id="name" type="text" name="SiteName" required maxlength="100" minlength="1" class="validate form-control" value="@Model.SiteName" />
+                                    <label class="form-label">@L("站点名称")</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-sm-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input id="name" type="text" name="Title" required maxlength="100" minlength="1" class="validate form-control" value="@Model.Title" />
+                                    <label class="form-label">@L("站点首页标题")</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-sm-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input id="friendshipLink-url" type="text" name="KeyWords" maxlength="256" minlength="1" class="validate form-control" value="@Model.KeyWords" />
+                                    <label class="form-label">@L("站点关键词")</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <textarea id="desc" name="Desc" class="validate form-control" maxlength="200">@Model.Desc</textarea>
+                                    <label class="form-label">@L("站点简介")</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-sm-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input type="text" name="Motto" maxlength="256" minlength="1" class="validate form-control" value="@Model.Motto" />
+                                    <label class="form-label">@L("座右铭")</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-sm-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input type="text" name="Name" maxlength="256" minlength="1" class="validate form-control" value="@Model.Name" />
+                                    <label class="form-label">@L("座右铭-名称")</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-sm-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input type="text" name="RecordNumber" minlength="1" class="validate form-control" value="@Model.RecordNumber" />
+                                    <label class="form-label">@L("备案号")</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-sm-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <label class="form-label" style="top:auto">@L("微信公众号")</label>
+                                    <section class="aui-file-up fl" style="padding-top:20px">
+                                        <button type="button" class="btn btn-primary" style="position:absolute;margin-left:200px;" id="deleteWeChat">清除图片</button>
+                                        <input type="hidden" value="@Model.WeChat" id="weChatValue" name="WeChat" />
+                                        <img class="aui-close-up-img" src="img/close.png" style="display:none">
+                                        <img src="@(string.IsNullOrEmpty(Model.WeChat)?"/images/up.png":Model.WeChat)" class="add-img" id="weChat">
+                                        <input type="file" name="file" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple="">
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <textarea name="HeadHtml" class="validate form-control" rows="10">@Model.HeadHtml</textarea>
+                                    <label class="form-label">@L("Head的HTML代码")</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <textarea name="RightAdvertisement" class="validate form-control" rows="10">@Model.RightAdvertisement</textarea>
+                                    <label class="form-label">@L("右侧广告HTML代码")</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <textarea id="desc" name="StaticJavaScrpit" class="validate form-control" rows="10">@Model.StaticJavaScrpit</textarea>
+                                    <label class="form-label">@L("全局JS代码")</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">@L("Cancel")</button>
+                        <button type="submit" class="btn btn-primary waves-effect">@L("Save")</button>
+                        <button type="button" class="btn btn-primary waves-effect" id="clearcache">@L("清理博客缓存")</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

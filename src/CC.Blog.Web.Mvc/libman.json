@@ -1,0 +1,30 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "wangEditor@10.0.13",
+      "destination": "wwwroot/lib/wangEditor/"
+    },
+    {
+      "library": "jquery.lazyload@1.9.1",
+      "destination": "wwwroot/lib/jquery.lazyload/"
+    },
+    {
+      "library": "social-share.js@1.0.16",
+      "destination": "wwwroot/lib/social-share.js/"
+    },
+    {
+      "library": "nprogress@0.2.0",
+      "destination": "wwwroot/lib/nprogress/"
+    },
+    {
+      "library": "jquery.ripples@0.5.3",
+      "destination": "wwwroot/lib/jquery.ripples/"
+    },
+    {
+      "library": "bootstrap-table@1.15.4",
+      "destination": "wwwroot/lib/bootstrap-table/"
+    }
+  ]
+}

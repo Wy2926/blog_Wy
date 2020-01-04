@@ -1,0 +1,127 @@
+﻿@using CC.Blog.Blogs.DTO
+@using Abp.Application.Services.Dto
+@{
+    Layout = "_Layout.cshtml";
+    PagedResultDto<ArticleOut> articles = ViewBag.Articles;
+}
+<div class="content">
+
+    <!-- 推荐文章 -->
+    @*<article class="excerpt-minic excerpt-minic-index">
+            <h2>
+                <span class="red">
+                    【推荐】
+                </span>
+                <a id="Recommended1_recommandtilte" target="_blank" title="暂无推荐">暂无推荐</a>
+            </h2>
+            <p id="Recommended1_recommandnote" class="note"></p>
+        </article>*@
+
+    <!-- 网站文章列表 -->
+    <div class="title">
+        <h3 id="ArticleList1_articletitleid">最新发布</h3>
+    </div>
+    <div id="articlelistdiv">
+        @*<article class='excerpt-1' style='height:150px;line-height:150px;text-align:center;'>
+                    <img src="~/Content/images/loading.gif" />
+            </article>*@
+        @if (articles == null)
+        {
+            <article class="excerpt-1" style="height:150px;line-height:150px;text-align:center;font-size:19px;font-weight:bold;">
+                @ViewBag.MessBox
+            </article>
+        }
+        else if (articles.Items.Count == 0)
+        {
+            <article class="excerpt-1" style="height:150px;line-height:150px;text-align:center;font-size:19px;font-weight:bold;">
+                暂无任何文章信息
+            </article>
+        }
+        else
+        {
+            foreach (var article in articles.Items)
+            {
+                <article class="excerpt excerpt-1">
+                    <a class="focus" href=@Url.Action("Details","Article",new { id = article.Id,typeId=ViewBag.ArticleTypeId}) title=@article.Title target="_blank" draggable="false">
+                        <img class="thumb" data-original=@article.CoverMap src=@article.CoverMap alt=@article.Title style="display: inline;" draggable="false">
+                    </a>
+                    <header>
+                        <a href=@Url.Action("Type","Article",new { id = article.TypeId}) class="cat" title=@article.Type draggable="false">
+                            @article.Type<i></i>
+                        </a>
+                        <h2>
+                            <a href=@Url.Action("Details","Article",new { id = article.Id,typeId=ViewBag.ArticleTypeId}) title=@article.Title target="_blank" draggable="false">@article.Title</a>
+                        </h2>
+                    </header>
+                    <p class="meta">
+                        <time class="time" title="" data-toggle="tooltip" data-placement="bottom" data-original-title="发布时间">
+                            <i class="glyphicon glyphicon-time"></i>@string.Format("{0:yyyy年MM月dd日 HH:mm:ss}", article.CreationTime)
+                        </time>
+                        <span class="views" title="" data-toggle="tooltip" data-placement="bottom" data-original-title="阅读量">
+                            <i class="glyphicon glyphicon-eye-open"></i> @article.ReadingNum
+                        </span>
+                        <span class="comment" title="" data-toggle="tooltip" data-placement="bottom" target="_blank" data-original-title="评论量">
+                            <i class="glyphicon glyphicon-comment"></i> @article.CommentNum
+                        </span>
+                    </p>
+                    <p class="note" style="text-indent:2em;">
+                        @article.Desc
+                    </p>
+                </article>
+            }
+        }
+    </div>
+    <nav class="pagination" style="display: none;">
+        <ul>
+            <li class="prev-page">
+            </li>
+            @if (articles != null)
+            {
+                int page = ViewBag.Page;
+                int maxPage = ViewBag.MaxPage;
+                for (int i = page - 3 > 0 ? page - 3 : 1; i < (page + 3 > maxPage ? maxPage : page + 3); i++)
+                {
+                    if (i == page)
+                    {
+                        <li class="active">
+                            <span>
+                                @i
+                            </span>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a href="?page=@i">
+                                @i
+                            </a>
+                        </li>
+                    }
+                }
+                if (page > 1)
+                {
+                    <li class="last-page">
+                        <a href="?page=@(page-1)">
+                            上一页
+                        </a>
+                    </li>
+                }
+                if (page < maxPage)
+                {
+                    <li class="next-page">
+                        <a href="?page=@(page+1)">
+                            下一页
+                        </a>
+                    </li>
+                }
+                <li>
+                    <span>
+                        共 @maxPage 页
+                    </span>
+                </li>
+            }
+        </ul>
+    </nav>
+
+    <script src="~/view-resources/Views/Article/articles.js"></script>
+</div>

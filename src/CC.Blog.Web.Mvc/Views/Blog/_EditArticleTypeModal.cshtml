@@ -1,0 +1,42 @@
+﻿@using CC.Blog.Web.Models.Common.Modals
+@using System.Text.RegularExpressions
+@model CC.Blog.Blogs.DTO.ArticleTypeOut
+@{
+    Layout = null;
+}
+@await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("修改友情链接")))
+<div class="modal-body">
+    <form name="ArticleTypeEditForm" role="form" novalidate class="form-validation">
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <div class="row clearfix">
+            <div class="col-sm-12">
+                <div class="form-group form-float">
+                    <div class="form-line">
+                        <input id="type-name" type="text" name="Name" required maxlength="20" minlength="1" class="validate form-control" value="@Model.Name" />
+                        <label for="type-name" class="form-label">@L("文章类型名称")</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group form-float">
+                    <div class="form-line">
+                        <textarea id="type-order" name="Order" required class="validate form-control" maxlength="4">@Model.Order</textarea>
+                        <label for="type-order" class="form-label">@L("排序")</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-sm-4">
+                <div class="checkbox">
+                    <input type="checkbox" name="IsMenu" value="true" id="EditActiveTypeIsMenu" class="filled-in" checked />
+                    <label for="EditActiveTypeIsMenu">@L("是否显示在菜单")</label>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+@await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+<script src="~/view-resources/Views/Blog/_EditArticleTypeModal.js" asp-append-version="true"></script>

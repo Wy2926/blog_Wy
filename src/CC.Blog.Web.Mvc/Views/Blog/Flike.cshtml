@@ -1,0 +1,172 @@
+﻿@using CC.Blog.Web.Startup
+@model IReadOnlyList<CC.Blog.Blogs.DTO.FriendshipLinkOut>
+@{
+    ViewBag.CurrentPageName = PageNames.FriendshipLink; // The menu item will be active for this page.
+}
+@section scripts
+    {
+    <environment names="Development">
+        <script src="~/view-resources/Views/Blog/link.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Blog/link.min.js" asp-append-version="true"></script>
+    </environment>
+}
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    @L("友情链接")
+                </h2>
+                <ul class="header-dropdown m-r--5">
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a id="RefreshButton" href="javascript:void(0);" class="waves-effect waves-block"><i class="material-icons">refresh</i>@L("Refresh")</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="body table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>@L("友链名称")</th>
+                            <th>@L("友链地址")</th>
+                            <th>@L("下线时间")</th>
+                            <th>@L("排序")</th>
+                            <th>@L("IP地址")</th>
+                            <th>@L("友链类型")</th>
+                            <th>@L("审核状态")</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var link in Model)
+                        {
+                            <tr>
+                                <td>@link.Name</td>
+                                <td><a href="@link.Url">@link.Url</a></td>
+                                <td>@link.OfflineTime</td>
+                                <td>@link.Order</td>
+                                <td>@link.Ip</td>
+                                <td>
+                                    @switch (link.LinkType)
+                                    {
+                                        case CC.Blog.Blogs.LinkType.HomePage:
+                                            @Html.Raw("首页")
+                                            break;
+                                        case CC.Blog.Blogs.LinkType.TotalStation:
+                                            @Html.Raw("全站")
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                </td>
+                                <td>
+                                    @switch (link.ToExamine)
+                                    {
+                                        case CC.Blog.Blogs.ToExamine.Unaudited:
+                                            <button type="button" class="btn btn-danger waves-effect" data-link-id="@link.Id" data-link-title="@link.Name" data-link-toExamine="@((int)CC.Blog.Blogs.ToExamine.NotPass)">不通过</button>
+                                            <button type="button" class="btn btn-success waves-effect" data-link-id="@link.Id" data-link-title="@link.Name" data-link-toExamine="@((int)CC.Blog.Blogs.ToExamine.Adopt)">通过</button>
+                                            break;
+                                        case CC.Blog.Blogs.ToExamine.Adopt:
+                                            <button type="button" class="btn btn-success waves-effect" data-link-id="@link.Id" data-link-title="@link.Name" data-link-toExamine="@((int)CC.Blog.Blogs.ToExamine.NotPass)">已通过</button>
+                                            break;
+                                        case CC.Blog.Blogs.ToExamine.NotPass:
+                                            <button type="button" class="btn btn-danger waves-effect" data-link-id="@link.Id" data-link-title="@link.Name" data-link-toExamine="@((int)CC.Blog.Blogs.ToExamine.Adopt)">未通过</button>
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                </td>
+                                <td class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">menu</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li><a href="#" class="waves-effect waves-block edit-friendshipLink" data-friendshipLink-id="@link.Id" data-toggle="modal" data-target="#FriendshipLinkEditModal"><i class="material-icons">edit</i>@L("Edit")</a></li>
+                                        <li><a href="#" class="waves-effect waves-block delete-friendshipLink" data-friendshipLink-id="@link.Id" data-friendshipLink-title="@link.Name"><i class="material-icons">delete_sweep</i>@L("Delete")</a></li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <button type="button" class="btn btn-primary btn-circle waves-effect waves-circle waves-float pull-right" data-toggle="modal" data-target="#FriendshipLinkCreateModal">
+                    <i class="material-icons">add</i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="FriendshipLinkCreateModal" tabindex="-1" role="dialog" aria-labelledby="ArticleCreateModalLabel" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>@L("创建新友情链接")</span>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form name="articleTypeCreateForm" role="form" novalidate class="form-validation">
+                    <div class="row clearfix">
+                        <div class="col-sm-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input id="name" type="text" name="Name" required maxlength="20" minlength="1" class="validate form-control" />
+                                    <label for="friendshipLink-name" class="form-label">@L("友链名称")</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-sm-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input id="friendshipLink-url" type="text" name="Url" maxlength="256" minlength="1" class="validate form-control" />
+                                    <label for="friendshipLink-url" class="form-label">@L("友链地址")</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-sm-2">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input id="friendshipLink-order" type="text" name="Order" maxlength="4" minlength="1" class="validate form-control" value="0" />
+                                    <label for="friendshipLink-order" class="form-label">@L("排序")</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-sm-12">
+                            <h4>@L("友链类型")</h4>
+                            <div class="col-sm-6">
+                                <input type="radio" name="LinkType" value="0" class="filled-in" id="linkType-0" checked />
+                                <label for="linkType-0">首页</label>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="radio" name="LinkType" value="1" class="filled-in" id="linkType-1" />
+                                <label for="linkType-1">全站</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">@L("Cancel")</button>
+                        <button type="submit" class="btn btn-primary waves-effect">@L("Save")</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="FriendshipLinkEditModal" tabindex="-1" role="dialog" aria-labelledby="FriendshipLinkEditModalLabel" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>

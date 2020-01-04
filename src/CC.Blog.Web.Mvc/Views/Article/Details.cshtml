@@ -1,0 +1,471 @@
+﻿@using CC.Blog.Blogs.DTO
+@using Abp.Application.Services.Dto
+@using CC.Blog.Authorization
+@using System.Security.Claims
+@{
+    Layout = "_Layout.cshtml";
+    var blogConfig = ViewBag.BlogConfig as BlogSiteConfig;
+    ArticleDetailsOut article = ViewBag.Article;
+    ArticleOut upArticle = ViewBag.UpArticle;
+    ArticleOut downArticle = ViewBag.DownArticle;
+    ICollection<ArticleOut> articleRecommends = ViewBag.ArticleRecommend;
+    ICollection<ArticleCommentOut> comments = ViewBag.Comments;
+}
+<link href="~/css/blog/sweet-alert.css" rel="stylesheet" />
+<script>
+    function changecode() {
+        $("#codeImg").attr("src", "@Url.Action("MixVerifyCode", "ArticleApi")?t=" + Math.random());
+    }
+</script>
+<script src="~/lib/social-share.js/js/social-share.min.js"></script>
+<div class="content">
+    @*@if (IsGranted(PermissionNames.Pages_Blogs_Admin))
+        {
+            <button type="button" class="btn btn-danger edit-article" data-article-id="@article.Id" data-toggle="modal" data-target="#ArticleEditModal" style="margin-right:0px;">编辑</button>
+            <button type="button" class="btn btn-danger" data-article-id="@article.Id" data-article-title="@article.Title" style="margin-right:0px;">删除</button>
+            <div class="modal fade" id="ArticleEditModal" tabindex="-1" role="dialog" aria-labelledby="ArticleEditModalLabel" data-backdrop="static">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                    </div>
+                </div>
+            </div>
+            <script>
+                $(function(){
+                var _$modal = $('#ArticleEditModal');
+                var _$form = $('form[name=ArticleEditForm]');
+        $('.edit-article').click(function (e) {
+            var articleId = $(this).attr("data-article-id");
+
+            e.preventDefault();
+            $.ajax({
+                url: abp.appPath + 'Blog/EditArticleModal?articleId=' + articleId,
+                type: 'POST',
+                contentType: 'application/html',
+                success: function (content) {
+                    $('#ArticleEditModal div.modal-content').html(content);
+                },
+                error: function (e) { }
+            });
+        });
+                })
+            </script>
+        }*@
+    @if (IsGranted(PermissionNames.Pages_Blogs_Admin))
+    {
+        <button type="button" class="btn btn-primary submitlink" data-article-id="@article.Id" data-article-title="@article.Title" data-toggle="modal" style="margin-right:0px;">提交链接</button>
+        <script>
+            $(".submitlink").click(function () {
+                var link = new Object();
+                link.url = window.location.href;
+                abp.message.confirm(
+                    abp.utils.formatString(abp.localization.localize('你确定提交文章 {0} 到搜索引擎吗', 'Blog'), $(this).attr("data-article-title")),
+                    function (isConfirmed) {
+                        if (isConfirmed) {
+                            abp.ajax({
+                                url: abp.appPath + 'api/services/app/Spider/SubmitLink?url=' + window.location.href,
+                                type: 'POST',
+                                contentType: 'application/json',
+                                success: function (content) {
+                                    abp.message.success('提交成功');
+                                },
+                                error: function (e) {
+                                    abp.message.error('提交失败', error);
+                                }
+                            })
+                        }
+                    }
+                );
+            })
+        </script>
+    }
+    <header class="article-header">
+        <h1 id="articletitleid" class="article-title">@article.Title</h1>
+        <div id="articlemetaid" class="article-meta">
+            <span class="item article-meta-time">
+                <time class="time" data-original-title="发表时间：@string.Format("{0:yyyy年MM月dd日 HH:mm:ss}", article.CreationTime))">
+                    <i class="glyphicon glyphicon-time"></i> @string.Format("{0:yyyy年MM月dd日 HH:mm:ss}", article.CreationTime)
+                </time>
+            </span><span class="item article-meta-category" data-original-title=@article.Type>
+                <i class="glyphicon glyphicon-list"></i>
+                <a href="@Url.Action("Type","Article",new { id=article.TypeId })" target="_blank" draggable="false">@article.Type</a>
+            </span>
+            <span class="item article-meta-views" data-toggle="tooltip" data-placement="bottom" data-original-title="浏览量：@article.ReadingNum">
+                <i class="glyphicon glyphicon-eye-open"></i> @article.ReadingNum
+            </span>
+            <span class="item article-meta-comment" data-toggle="tooltip" data-placement="bottom" data-original-title="评论量：@article.CommentNum" onclick="commentLocation();">
+                <i class="glyphicon glyphicon-comment"></i> @article.CommentNum
+            </span>
+        </div>
+    </header>
+    <article id="articlecontentid" class="article-content">
+        @Html.Raw(article.Html)
+        @if (!string.IsNullOrEmpty(article.HideBody))
+        {
+            <p>******************目前显示隐藏内容****************</p>
+            @Html.Raw(article.HideBody);
+        }
+        <p class="share">
+            <b>转载：</b>感谢您对@(blogConfig.SiteName)网站平台的认可，以及对我们原创作品以及文章的青睐，非常欢迎各位朋友分享到个人站长或者朋友圈，但转载请说明文章出处“来源@(blogConfig.SiteName)”。
+            <a href=@Url.Action("Details","Article",new { id = article.Id ,typeId=ViewBag.ArticleTypeId}) target="_blank">@article.Title</a>
+        </p>
+        @if (!string.IsNullOrEmpty(blogConfig.WeChat))
+        {
+            <img src="@blogConfig.WeChat" alt="微信公众号" style="max-width:50%;" draggable="false">
+        }
+    </article>
+    @*<div class="article-social">
+            <a href="javascript:;" data-action="ding" data-id="1052" id="Addlike" class="action" data-original-title="" title="">
+                <i class="fa fa-heart-o"></i>喜欢 (<span class="count">31303</span>)
+            </a>
+            <span class="or">or</span>
+            <span class="action action-share bdsharebuttonbox">
+                <i class="fa fa-share-alt"></i>分享 (<span class="bds_count" data-cmd="count" title="累计分享0次">0</span>)<div class="action-popover"><div class="popover top in"><div class="arrow"></div><div class="popover-content"><a href="#" class="sinaweibo fa fa-weibo" data-cmd="tsina" title="" data-original-title="分享到新浪微博"></a><a href="#" class="bds_qzone fa fa-star" data-cmd="qzone" title="" data-original-title="分享到QQ空间"></a><a href="#" class="tencentweibo fa fa-tencent-weibo" data-cmd="tqq" title="" data-original-title="分享到腾讯微博"></a><a href="#" class="qq fa fa-qq" data-cmd="sqq" title="" data-original-title="分享到QQ好友"></a><a href="#" class="bds_renren fa fa-renren" data-cmd="renren" title="" data-original-title="分享到人人网"></a><a href="#" class="bds_weixin fa fa-weixin" data-cmd="weixin" title="" data-original-title="分享到微信"></a><a href="#" class="bds_more fa fa-ellipsis-h" data-cmd="more" data-original-title="" title=""></a></div></div></div>
+            </span>
+        </div>*@
+    <div id="articletagsid" class="article-tags">
+        标签：
+        @foreach (var articleTagName in article.ArticleStrTags)
+        {
+            <a href=@Url.Action("Tag","Article",new {tagName = articleTagName}) rel="tag" draggable="false">@articleTagName</a>
+        }
+    </div>
+    <div class="social-share" style="text-align: center;"></div>
+    <script>
+        window._bd_share_config = {
+            "common": {
+                "bdSnsKey": {},
+                "bdText": "",
+                "bdMini": "2",
+                "bdMiniList": false,
+                "bdPic": "",
+                "bdStyle": "0",
+                "bdSize": "16"
+            },
+            "share": {
+                "bdSize": 16
+            }
+        };
+        with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
+    </script>
+    <nav id="articlenavid" class="article-nav">
+        <span class="article-nav-prev">
+            上一篇<br>
+            @if (upArticle == null)
+            {
+                <a id="articlenext" rel="next" draggable="false">没有上一篇文章了</a>
+            }
+            else
+            {
+                <a href=@Url.Action("Details","Article",new { id = upArticle.Id,typeId=ViewBag.ArticleTypeId}) id="articleprev" rel="prev" target="_blank" draggable="false">@upArticle.Title</a>
+            }
+        </span>
+        <span class="article-nav-next">
+            下一篇<br>
+            @if (downArticle == null)
+            {
+                <a id="articlenext" rel="next" draggable="false">没有下一篇文章了</a>
+            }
+            else
+            {
+                <a href=@Url.Action("Details","Article",new { id = downArticle.Id,typeId=ViewBag.ArticleTypeId}) id="articlenext" rel="next" target="_blank" draggable="false">@downArticle.Title</a>
+            }
+        </span>
+    </nav>
+    <div id="relatesid" class="relates">
+        <div class="title">
+            <h3>相关推荐</h3>
+        </div>
+        <ul id="Relatedtorecommend">
+            @foreach (var recommend in articleRecommends)
+            {
+                <li><a href=@Url.Action("Details","Article",new { id = recommend.Id,typeId=ViewBag.ArticleTypeId}) title=@recommend.Title target="_blank" draggable="false">@recommend.Title</a></li>
+            }
+        </ul>
+    </div>
+    <div class="title" id="comment">
+        <h3>评论</h3>
+    </div>
+    <div id="respond">
+        <div class="comt-title">
+            <div class="comt-avatar pull-left">
+                <img alt="用户默认头像" src="https://cuiqingcai.com/avatar/.png" class="avatar avatar-54 photo avatar-default" height="54" width="54">
+            </div>
+            <div class="comt-author pull-left">
+                <span id="respond-title">发表我的评论</span>
+            </div>
+            <a id="cancel-comment-reply-link" class="pull-right" href="javascript:;" onclick="return cancelcomment()">取消评论</a>
+        </div>
+        <div>
+            <input name="" id="txtnicename" class="form-control" size="22" placeholder="您的昵称（必填，字数30）" maxlength="30" autocomplete="off" tabindex="1" type="text">
+            <input name="" id="txtemailcon" class="form-control" size="22" placeholder="您的邮箱（非必填）" maxlength="58" autocomplete="off" tabindex="2" type="text">
+            <input name="" id="txtsite" class="form-control" size="22" placeholder="您的网站（非必填）" maxlength="58" autocomplete="off" tabindex="3" type="text">
+            <div class="commentcode-box">
+                <input name="txtcode" id="txtcode" class="form-control" size="4" placeholder="输入验证码（必填）" maxlength="4" autocomplete="off" tabindex="2" type="text">
+                <img alt="看不清，点击刷新验证码" title="看不清，点击刷新验证码" id="codeImg" width="53" height="34" style="vertical-align:middle;cursor:pointer;position:absolute;right:0px;top:0px;z-index:1" onclick="changecode()" draggable="false" src="@Url.Action("MixVerifyCode","ArticleApi")" />
+            </div>
+            <div class="comment-box" style="margin-top:3px;" id="commentboxid">
+                <textarea placeholder="您的评论或留言（必填，字数200）" name="comment-textarea" id="comment-textarea" class="form-control" maxlength="200" style="padding:0px;margin:0px;padding-left:5px;"></textarea>
+                <div class="comment-ctrl">
+                    <button type="button" name="comment-submit" id="comment-submit" tabindex="4" onclick="submitcomment()">评论</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div id="postcomments">
+        <ol id="comment_list" class="commentlist">
+            @foreach (var comment in comments)
+            {
+                <li class="comment">
+                    <div class="c-avatar">
+                        <img alt="用户默认头像" data-original="~/images/DefaultHead.png" class="avatar avatar-54 photo" height="54" width="54" src="~/images/DefaultHead.png" style="border-radius:100%; overflow:hidden;">
+                        <div class="c-main">
+                            @comment.Body
+                            <div class="c-meta" id="div-comment-@comment.Id">
+                                <span class="c-author">
+                                    <a href="@comment.Site" rel="external nofollow" class="url" target="_blank">@comment.NickName</a>
+                                </span>@string.Format("{0:yyyy年MM月dd日 HH:mm:ss}", comment.CreationTime)
+                                <a rel="nofollow" href="~/index.html" class="comment-reply-link" data-comment-id="@comment.Id" aria-label="回复给91大闸蟹" onclick="return articlereply('@comment.NickName',@comment.Id)">回复</a>
+                            </div>
+                        </div>
+                    </div>
+                    @if (comment.SubComments != null && comment.SubComments.Count > 0)
+                    {
+                        <ul class="children">
+                            @foreach (var subcomment in comment.SubComments)
+                            {
+                                <li class="comment even depth-2">
+                                    <div class="c-avatar">
+                                        <img alt="" data-original="~/images/DefaultHead.png" class="avatar avatar-54 photo" height="54" width="54" src="~/images/DefaultHead.png" style="border-radius:100%; overflow:hidden;">
+                                        <div class="c-main">
+                                            @subcomment.Body
+                                            <div class="c-meta" id="div-comment-@subcomment.Id">
+                                                <span class="c-author">
+                                                    <a href="" rel="external nofollow" class="url" onclick="return false;" target="_blank">@subcomment.NickName</a>
+                                                    回复-@subcomment.ReplyNickName
+                                                </span>
+                                                @string.Format("{0:yyyy年MM月dd日 HH:mm:ss}", subcomment.CreationTime)
+                                                <a rel="nofollow" href="" class="comment-reply-link" onclick="return articlereply('@subcomment.NickName',@subcomment.Id)">回复</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    }
+                </li>
+            }
+        </ol>
+        <div class="pagination1" style="text-align:center;margin:20px 0 0;">
+            <a onclick="morecomment()" id="moremenntid" draggable="false" style="display: none;">
+                <div style="display:inline-block;" id="btnmore">加载更多 </div> &nbsp;
+                @*<img src="images/commentloading.gif" style="display:none;" id="imgmore" draggable="false">*@
+            </a>
+            <span class="pagecount" style="display:none;">2</span>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    //为兼容QQ浏览器不使用$(function(){})
+    var id = "";
+    //默认隐藏“加载更多按钮”
+    $("#moremenntid").css("display", "none");
+    //if (GetQueryString("id") != null) {
+    //    id = GetQueryString("id");
+    //    $.ajax({
+    //        type: "POST",
+    //        url: "Ashx/CommentShow.ashx",
+    //        data: { articleid: id, pagecount: 1, iscomment: "True" },
+    //        success: function (data) {
+    //            $("#comment_list").html("").append(data);
+    //            $(".pagecount").html(parseInt($(".pagecount").html()) + 1);
+    //            //显示出“加载更多按钮”
+    //            if (data.indexOf("暂无评论") > -1 || data.indexOf("该文章暂未开放评论") > -1) {
+    //                $("#moremenntid").css("display", "none");
+    //            }
+    //            else {
+    //                $("#moremenntid").css("display", "block");
+    //            }
+
+    //        }
+    //    });
+
+
+    //    var para1 = "{browserdata:'" + getbrowserdata() + "',articleid:'"+ id +"'}";
+    //    $.ajax({
+    //        type: "POST",
+    //        contentType: "application/json;utf-8",
+    //        url: "Ajax/JsUserPortrait.asmx/AddUserPortrait",
+    //        data: para1,
+    //        dataType: "json",
+    //        success: function (result1) {
+
+    //        }
+    //    });
+    //}
+    //else {
+    //    alert("系统参数缺失，请重新打开页面");
+    //}
+
+    function commentLocation() {
+        $("html,body").animate({ scrollTop: $("#comment").offset().top }, 500);
+    }
+
+    function morecomment() {
+        //防止点击重复加载
+        if ($.trim($("#btnmore").html()).indexOf("没有更多评论了") == -1 || $.trim($("#btnmore").html()).indexOf("没有更多评论了") == -1) {
+            $("#imgmore").css("display", "inline-block");
+            var id = "";
+            if (GetQueryString("id") != null) {
+                id = GetQueryString("id");
+
+                $.ajax({
+                    type: "POST",
+                    url: "Ashx/CommentShow.ashx",
+                    data: { articleid: id, pagecount: $(".pagecount").html() },
+                    success: function (data) {
+                        if (data.indexOf("暂无评论") > -1) {
+                            $("#moremenntid").css("display", "none");
+                        }
+                        else {
+                            if (data == "") {
+                                $("#btnmore").html("<em>没有更多评论了 </em>");
+                            }
+                            else {
+                                $("#comment_list").append(data);
+                                $(".pagecount").html(parseInt($(".pagecount").html()) + 1);
+                            }
+                        }
+                        //加载图像
+                        $("#imgmore").css("display", "none");
+                    }
+                });
+            }
+        }
+    }
+
+    function submitcomment() {
+
+        if ($.trim($("#txtnicename").val()) == "") {
+            txtturncomment("#txtnicename", "您的昵称（必填）", "昵称为必填项，请填写您的昵称", "border:2px solid #ED8C24");
+            return false;
+        }
+        if ($.trim($("#txtemailcon").val()) != "") {
+            var testemail = /^([a-zA-Z0-9_-])+@@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+            if (!testemail.test($.trim($("#txtemailcon").val()))) {
+                $("#txtemailcon").focus();
+                infoalert("邮箱格式不正确", "请检查您输入的邮箱是否正确", "error", "");
+                return false;
+            }
+        }
+
+        if ($.trim($("#txtsite").val()) != "") {
+            var testsite = /^http(s)?:\/\/([0-9a-zA-Z]+\.?)+$/;
+            if (!testsite.test($.trim($("#txtsite").val()))) {
+                $("#txtsite").focus();
+                infoalert("网站格式不正确", "请检查您输入的网站是否正确", "error", "");
+                return false;
+            }
+        }
+                if ($.trim($("#comment-textarea").val()) == "") {
+                    txtturncomment("#commentboxid", "您的评论或留言（必填）", "请填写您的评论或留言", "border:2px solid #ED8C24");
+                    $("#comment-textarea").attr("placeholder", "请填写您的评论或留言");
+                    setTimeout(function () {
+                        $("#comment-textarea").attr("placeholder", "您的评论或留言（必填）");
+                    }, 5000);
+                    return false;
+                }
+        if ($.trim($("#txtcode").val()) == "") {
+            txtturncomment("#txtcode", "输入验证码（必填）", "验证码为必填项，请填写验证码", "border:2px solid #ED8C24");
+            return false;
+        }
+
+        getvalidatecomment();
+    }
+
+    function getvalidatecomment() {
+        var comment=new Object();
+        comment.ArticleId=@article.Id;
+        comment.NickName=$.trim($("#txtnicename").val());
+        comment.Email=$.trim($("#txtemailcon").val());
+        comment.Site=$.trim($("#txtsite").val());
+        comment.Body=$.trim($("#comment-textarea").val());
+        comment.Code = $.trim($("#txtcode").val());
+
+        var respond = $("#respond");
+        comment.ParArticleCommentId = respond.attr("data-comment-id");
+        $.ajax({
+            type: "POST",
+            contentType: "application/json;utf-8",
+            url: "@Url.Action("Comment", "ArticleApi")",
+            data: JSON.stringify(comment),
+            dataType: "json",
+            success: function (data) {
+                abp.message.success("评论成功，请等待管理员审核");
+                $("#txtnicename").val("");
+                $("#txtcode").val("");
+                $("#txtemailcon").val("");
+                $("#comment-textarea").val("");
+                $("#codeImg").click();//刷新验证码
+            },
+            error: function (data) {
+                var result = data.responseJSON.error;
+                if (result.code == 403) {
+                    abp.message.warn(result.message);
+                    $("#codeImg").click();//刷新验证码
+                }
+                else if (result.code == 500) {
+                    abp.message.error(result.details);
+                    $("#codeImg").click();//刷新验证码
+                }
+                else {
+                    abp.message.error(result.message);
+                    $("#codeImg").click();//刷新验证码
+                }
+            }
+        });
+
+    }
+
+    function articlereply(nickname, commentid, subcommentid) {
+        var respond = $("#respond");
+        $("#div-comment-" + commentid).after(respond);
+        $("#respond-title").text("回复：" + nickname);
+        respond.attr("data-comment-id", commentid);
+        return false;
+    }
+
+    function cancelcomment() {
+        var respond = $("#respond");
+        respond.removeAttr("data-comment-id");
+        $("#respond-title").text("发表我的评论");
+        $("#comment").after(respond);
+        return false;
+    }
+
+    function txtturncomment(ObjControl, bstrpalceholder, astrpalceholder, strstyle) {
+        $(ObjControl).attr("placeholder", astrpalceholder);
+        $(ObjControl).attr("style", strstyle);
+        setTimeout(function () {
+            $(ObjControl).removeAttr("style");
+            setTimeout(function () {
+                $(ObjControl).attr("style", strstyle);
+                setTimeout(function () {
+                    $(ObjControl).removeAttr("style");
+                    setTimeout(function () {
+                        $(ObjControl).attr("style", strstyle);
+                        setTimeout(function () {
+                            $(ObjControl).removeAttr("style");
+                            setTimeout(function () {
+                                $(ObjControl).attr("placeholder", bstrpalceholder);
+                            }, 5000);
+                        }, 200)
+                    }, 200)
+                }, 200)
+            }, 200)
+        }, 200);
+    }
+
+</script>
+

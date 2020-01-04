@@ -1,0 +1,288 @@
+﻿@using CC.Blog.Web.Startup
+@using CC.Blog.Web.Views.Shared.Components.Paging
+@model CC.Blog.Web.Models.Blog.ArticleListViewModel
+@{
+    ViewBag.CurrentPageName = PageNames.Article; // The menu item will be active for this page.
+}
+@section scripts
+    {
+    <environment names="Development">
+        <script src="~/view-resources/Views/Blog/index.js" asp-append-version="true"></script>
+        <script src="~/lib/wangEditor/wangEditor.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Blog/Index.min.js" asp-append-version="true"></script>
+        <script src="~/lib/wangEditor/wangEditor.min.js" asp-append-version="true"></script>
+    </environment>
+
+    <style>
+        .modal-dialog {
+            width: 800px;
+        }
+    </style>
+    <script type="text/javascript">
+        function configEditor(editor) {
+            editor.customConfig.uploadImgShowBase64 = true;
+            editor.customConfig.uploadImgServer = "/Blog/OnPostUpload";
+            editor.customConfig.uploadImgMaxSize = 3 * 1024 * 1024;
+            editor.customConfig.uploadImgMaxLength = 5;
+            editor.customConfig.customUploadImg = function (files, insert) {
+                // files 是 input 中选中的文件列表
+                // insert 是获取图片 url 后，插入到编辑器的方法
+                var uploadData = new FormData();
+                for (var i = 0; i < files.length; i++) {
+                    uploadData.append(files[i].name, files[i]);
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Blog/OnPostUpload",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("XSRF-TOKEN",
+                            abp.security.antiForgery.getToken());
+                    },
+                    data: uploadData,
+                    processData: false,
+                    contentType: false,
+                    async: false,
+                    success: function (response) {
+                        for (var i = 0; i < response.data.length; i++) {
+                            insert(response.data[i]);
+                        }
+                    },
+                    failure: function (response) {
+                        alert(response);
+                    }
+                })
+            }
+        }
+        var Editor = window.wangEditor;
+        var editorCreate = new Editor("#article-createhtml");
+        configEditor(editorCreate);
+        /*editorCreate.customConfig.uploadImgShowBase64 = true;
+        editorCreate.customConfig.uploadImgServer = "/Blog/OnPostUpload";
+        editorCreate.customConfig.uploadImgMaxSize = 3 * 1024 * 1024;
+        editorCreate.customConfig.uploadImgMaxLength = 5;
+        editorCreate.customConfig.customUploadImg = function (files, insert) {
+            // files 是 input 中选中的文件列表
+            // insert 是获取图片 url 后，插入到编辑器的方法
+            var uploadData = new FormData();
+            for (var i = 0; i < files.length; i++) {
+                uploadData.append(files[i].name, files[i]);
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/Blog/OnPostUpload",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        abp.security.antiForgery.getToken());
+                    //$('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                data: uploadData,
+                processData: false,
+                contentType: false,
+                async: false,
+                success: function (response) {
+                    alert(response.data);
+                    for (var i = 0; i < response.data.length; i++) {
+                        insert(response.data[i]);
+                    }
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            })
+        }*/
+        editorCreate.create();
+    </script>
+}
+<form name="select" action="@Url.Action("Index","Blog")">
+
+</form>
+<div class="row clearfix dataTable">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    @L("文章")
+                </h2>
+                <ul class="header-dropdown m-r--5">
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a id="RefreshButton" href="javascript:void(0);" class="waves-effect waves-block"><i class="material-icons">refresh</i>@L("Refresh")</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="body table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>@L("文章标题")</th>
+                            <th>@L("文章类型")</th>
+                            <th>@L("文章标签")</th>
+                            <th>@L("CreationTime")</th>
+                            <th>@L("是否启用")</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var article in Model.Articles)
+                        {
+                            <tr>
+                                <td><a href=@Url.Action("Details","Article",new { id = article.Id}) title=@article.Title target="_blank" draggable="false">@article.Title</a></td>
+                                <td>@article.Type</td>
+                                <td>@string.Join("  ", article.ArticleStrTags)</td>
+                                <td>@article.CreationTime</td>
+                                <td><i class="material-icons" style="color:@(article.IsEnable ? "green":"red");">@(article.IsEnable ? "check_box" : "indeterminate_check_box")</i></td>
+                                <td class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">menu</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li><a href="#" class="waves-effect waves-block edit-article" data-article-id="@article.Id" data-toggle="modal" data-target="#ArticleEditModal"><i class="material-icons">edit</i>@L("Edit")</a></li>
+                                        <li><a href="#" class="waves-effect waves-block delete-article" data-article-id="@article.Id" data-article-title="@article.Title"><i class="material-icons">delete_sweep</i>@L("Delete")</a></li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <button type="button" class="btn btn-primary btn-circle waves-effect waves-circle waves-float pull-right" data-toggle="modal" data-target="#ArticleCreateModal">
+                    <i class="material-icons">add</i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    @await Component.InvokeAsync(typeof(PagingViewComponen))
+
+</div>
+
+<div class="modal fade" id="ArticleCreateModal" tabindex="-1" role="dialog" aria-labelledby="ArticleCreateModalLabel" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>@L("创建新文章")</span>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form name="articleCreateForm" role="form" novalidate class="form-validation">
+                    <div class="row clearfix">
+                        <div class="col-sm-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input id="article-title" type="text" name="Title" required maxlength="50" minlength="5" class="validate form-control" />
+                                    <label for="article-title" class="form-label">@L("文章标题")</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-sm-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input id="coverMap" type="text" name="CoverMap" maxlength="256" minlength="2" class="validate form-control" />
+                                    <label for="coverMap" class="form-label">@L("封面图")</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <textarea id="article-desc" name="Desc" class="validate form-control" maxlength="200"></textarea>
+                                    <label for="article-desc" class="form-label">@L("文章简介")</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group form-float">
+                                <label for="article-html" class="form-label">@L("文章内容")</label>
+                                <div class="form-line" id="article-createhtml">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <textarea id="article-hidebody" name="HideBody" class="validate form-control" maxlength="1000"></textarea>
+                                    <label for="article-hidebody" class="form-label">@L("隐藏内容")</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input id="article-tags" type="text" name="ArticleStrTags" class="validate form-control" maxlength="100" />
+                                    <label for="article-tags" class="form-label">@L("标签")</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-sm-12">
+                            <h4>@L("文章类型")</h4>
+                            @foreach (var parType in Model.ArticleTypes.Where(p => p.ParArticleType == null))
+                            {
+                                <div class="col-sm-3">
+                                    <input type="radio" name="ArticletypeId" value="@parType.Id" class="filled-in" id="permission-@parType.Id" />
+                                    <label for="permission-@parType.Id">@parType.Name</label>
+                                </div>
+
+                                @foreach (var articleType in Model.ArticleTypes.Where(p => p.ParArticleType != null && p.ParArticleType.Id == parType.Id))
+                                {
+                                    <div class="col-sm-2">
+                                        <input type="radio" name="ArticletypeId" value="@articleType.Id" class="filled-in" id="permission-@articleType.Id" />
+                                        <label for="permission-@articleType.Id">@articleType.Name</label>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-sm-12">
+                            <div class="checkbox">
+                                <input type="checkbox" name="IsEnable" value="true" id="CreateActiveIsEnable" class="filled-in" checked />
+                                <label for="CreateActiveIsEnable">@L("IsActive")</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    @*<div class="row clearfix">
+                            <div class="col-sm-12">
+                                <div class="form-group form-float">
+                                    <div class="">
+                                        <input type="checkbox" name="IsEnable" value="true" id="CreateActiveIsEnable" class="filled-in" />
+                                        <label for="CreateActiveIsEnable">@L("IsActive")</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">@L("Cancel")</button>
+                        <button type="submit" class="btn btn-primary waves-effect">@L("Save")</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ArticleEditModal" tabindex="-1" role="dialog" aria-labelledby="ArticleEditModalLabel" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+

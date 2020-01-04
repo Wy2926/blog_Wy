@@ -1,0 +1,122 @@
+﻿@using CC.Blog.Web.Startup
+@using CC.Blog.Web.Models.Common.Modals
+@using Abp.Application.Services.Dto
+@using CC.Blog.Web.Views.Shared.Components.Paging
+@model Abp.Auditing.AuditLog
+@{
+    Layout = null;
+}
+<script>
+    $(function () {
+         var json = JSON.parse('@(Html.Raw(Model.Parameters))');
+         $("#parameters").html(JSON.stringify(json, null, 4));
+    })
+</script>
+<div class="modal-body">
+    <h3>@L("用户信息")</h3>
+    <div class="row clearfix">
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-lg-3 col-form-label"> @L("用户ID"): </label>
+                <div class="col-lg-9">
+                    <span>@Model.UserId</span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-lg-3 col-form-label"> @L("用户IP"): </label>
+                <div class="col-lg-9">
+                    <span>@Model.ClientIpAddress</span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-lg-3 col-form-label"> @L("客户端"): </label>
+                <div class="col-lg-9">
+                    <span>@Model.ClientName</span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-lg-3 col-form-label"> @L("浏览器"): </label>
+                <div class="col-lg-9">
+                    <span>@Model.BrowserInfo</span>
+                </div>
+            </div>
+            <!---->
+        </div>
+    </div>
+    <h3>@L("动作信息")</h3>
+    <div class="row clearfix">
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-lg-3 col-form-label">@L("服务名称") : </label>
+                <div class="col-lg-9">
+                    <span>@Model.ServiceName</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-lg-3 col-form-label"> @L("动作名称"): </label>
+                <div class="col-lg-9">
+                    <span>@Model.MethodName</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-lg-3 col-form-label"> @L("时间"): </label>
+                <div class="col-lg-9">
+                    <span>@Model.ExecutionTime</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-lg-3 col-form-label"> @L("持续时间"): </label>
+                <div class="col-lg-9">
+                    <span>@Model.ExecutionDuration ms</span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-lg-3 col-form-label"> @L("参数"): </label>
+                <div class="col-lg-9 alert kt-alert kt-alert--default">
+                    <pre lang="js" id="parameters"></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h3>Custom data</h3>
+    <div class="row clearfix">
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-lg-3 col-form-label">
+                    @(string.IsNullOrEmpty(Model.CustomData) ? L("无") : Model.CustomData)
+                </label>
+                <!---->
+            </div>
+        </div>
+    </div>
+    <h3>Error state</h3>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group row">
+                <!---->
+                <label class="col-lg-12 col-form-label ng-star-inserted">
+                    @if (string.IsNullOrEmpty(Model.Exception))
+                    {
+                        <i class="fa fa-check-circle kt-font-success"></i><span>成功</span>
+                    }
+                    else
+                    {
+                        <pre>
+                                @Model.Exception
+                            </pre>
+                    }
+                </label>
+                <!---->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+</div>

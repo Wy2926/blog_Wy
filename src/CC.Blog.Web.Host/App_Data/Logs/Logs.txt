@@ -1,0 +1,187 @@
+DEBUG 2019-11-14 00:37:34,051 [1    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2019-11-14 00:37:34,076 [1    ] Abp.Modules.AbpModuleManager             - Found 15 ABP modules in total.
+DEBUG 2019-11-14 00:37:34,092 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: CC.Blog.Web.Host.Startup.BlogWebHostModule, CC.Blog.Web.Host, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-11-14 00:37:34,095 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: CC.Blog.BlogWebCoreModule, CC.Blog.Web.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-11-14 00:37:34,095 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: CC.Blog.BlogApplicationModule, CC.Blog.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-11-14 00:37:34,095 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: CC.Blog.BlogCoreModule, CC.Blog.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-11-14 00:37:34,096 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCoreModule, Abp.ZeroCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-11-14 00:37:34,096 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCommonModule, Abp.Zero.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-11-14 00:37:34,096 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpKernelModule, Abp, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-11-14 00:37:34,096 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AutoMapper.AbpAutoMapperModule, Abp.AutoMapper, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-11-14 00:37:34,097 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: CC.Blog.EntityFrameworkCore.BlogEntityFrameworkModule, CC.Blog.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-11-14 00:37:34,097 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.EntityFrameworkCore.AbpZeroCoreEntityFrameworkCoreModule, Abp.ZeroCore.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-11-14 00:37:34,097 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule, Abp.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-11-14 00:37:34,097 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkCommonModule, Abp.EntityFramework.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-11-14 00:37:34,097 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.AbpAspNetCoreModule, Abp.AspNetCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-11-14 00:37:34,098 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebCommonModule, Abp.Web.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-11-14 00:37:34,098 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.SignalR.AbpAspNetCoreSignalRModule, Abp.AspNetCore.SignalR, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-11-14 00:37:34,101 [1    ] Abp.Modules.AbpModuleManager             - 15 modules loaded.
+DEBUG 2019-11-14 00:37:34,153 [1    ] o.Configuration.LanguageManagementConfig - Converted Abp (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2019-11-14 00:37:34,153 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpZero (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2019-11-14 00:37:34,153 [1    ] o.Configuration.LanguageManagementConfig - Converted Blog (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2019-11-14 00:37:34,153 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpWeb (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2019-11-14 00:37:34,409 [1    ] ameworkCore.AbpEntityFrameworkCoreModule - Registering DbContext: CC.Blog.EntityFrameworkCore.BlogDbContext, CC.Blog.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-11-14 00:37:34,757 [1    ] Abp.Localization.LocalizationManager     - Initializing 4 localization sources.
+DEBUG 2019-11-14 00:37:34,811 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Abp
+DEBUG 2019-11-14 00:37:34,848 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpZero
+DEBUG 2019-11-14 00:37:34,862 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Blog
+DEBUG 2019-11-14 00:37:34,887 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpWeb
+DEBUG 2019-11-14 00:37:34,926 [1    ] Abp.BackgroundJobs.BackgroundJobManager  - Start background worker: Castle.Proxies.BackgroundJobManagerProxy
+DEBUG 2019-11-14 00:37:34,948 [1    ] rization.Users.UserTokenExpirationWorker - Start background worker: Abp.Authorization.Users.UserTokenExpirationWorker
+DEBUG 2019-11-14 00:37:34,984 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Found 21 classes define auto mapping attributes
+DEBUG 2019-11-14 00:37:34,984 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Models.TokenAuth.ExternalLoginProviderInfoModel
+DEBUG 2019-11-14 00:37:34,990 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Users.Dto.ArticleUserDto
+DEBUG 2019-11-14 00:37:34,990 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Users.Dto.CreateUserDto
+DEBUG 2019-11-14 00:37:34,990 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Users.Dto.UserDto
+DEBUG 2019-11-14 00:37:34,990 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Sessions.Dto.TenantLoginInfoDto
+DEBUG 2019-11-14 00:37:34,990 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Sessions.Dto.UserLoginInfoDto
+DEBUG 2019-11-14 00:37:34,991 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Roles.Dto.PermissionDto
+DEBUG 2019-11-14 00:37:34,991 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.MultiTenancy.Dto.CreateTenantDto
+DEBUG 2019-11-14 00:37:34,991 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.MultiTenancy.Dto.TenantDto
+DEBUG 2019-11-14 00:37:34,991 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Blogs.DTO.ArticleCommentInput
+DEBUG 2019-11-14 00:37:34,991 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Blogs.DTO.ArticleCommentOut
+DEBUG 2019-11-14 00:37:34,991 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Blogs.DTO.ArticleCreateOrUpdate
+DEBUG 2019-11-14 00:37:34,991 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Blogs.DTO.ArticleDetailsOut
+DEBUG 2019-11-14 00:37:34,991 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Blogs.DTO.ArticleOut
+DEBUG 2019-11-14 00:37:34,991 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Blogs.DTO.ArticleTagOut
+DEBUG 2019-11-14 00:37:34,991 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Blogs.DTO.ArticleTypeInput
+DEBUG 2019-11-14 00:37:34,991 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Blogs.DTO.ArticleTypeOut
+DEBUG 2019-11-14 00:37:34,991 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Blogs.DTO.CreateProposalInput
+DEBUG 2019-11-14 00:37:34,991 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Blogs.DTO.FriendshipLinkCreateOrUpdate
+DEBUG 2019-11-14 00:37:34,991 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Blogs.DTO.FriendshipLinkOut
+DEBUG 2019-11-14 00:37:34,991 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Blogs.DTO.ProposalOut
+INFO  2019-11-14 00:37:38,540 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/  
+WARN  2019-11-14 00:37:38,666 [7    ] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported cultures 'zh-CN, zh'.
+WARN  2019-11-14 00:37:38,666 [7    ] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported UI Cultures 'zh-CN, zh'.
+INFO  2019-11-14 00:37:38,765 [7    ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'CC.Blog.Web.Host.Controllers.HomeController.Index (CC.Blog.Web.Host)'
+INFO  2019-11-14 00:37:39,491 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {action = "Index", controller = "Home", area = ""}. Executing action CC.Blog.Web.Host.Controllers.HomeController.Index (CC.Blog.Web.Host)
+INFO  2019-11-14 00:37:39,795 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method CC.Blog.Web.Host.Controllers.HomeController.Index (CC.Blog.Web.Host) - Validation state: Valid
+INFO  2019-11-14 00:37:39,798 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method CC.Blog.Web.Host.Controllers.HomeController.Index (CC.Blog.Web.Host), returned result Microsoft.AspNetCore.Mvc.RedirectResult in 1.4182ms.
+INFO  2019-11-14 00:37:40,002 [11   ] vc.Infrastructure.RedirectResultExecutor - Executing RedirectResult, redirecting to /swagger.
+INFO  2019-11-14 00:37:40,012 [11   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action CC.Blog.Web.Host.Controllers.HomeController.Index (CC.Blog.Web.Host) in 518.3923ms
+INFO  2019-11-14 00:37:40,014 [11   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'CC.Blog.Web.Host.Controllers.HomeController.Index (CC.Blog.Web.Host)'
+INFO  2019-11-14 00:37:40,064 [11   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 1528.387ms 302 
+INFO  2019-11-14 00:37:40,065 [11   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger  
+WARN  2019-11-14 00:37:40,066 [11   ] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported cultures 'zh-CN, zh'.
+WARN  2019-11-14 00:37:40,066 [11   ] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported UI Cultures 'zh-CN, zh'.
+INFO  2019-11-14 00:37:40,090 [11   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 24.9241ms 301 
+INFO  2019-11-14 00:37:40,093 [11   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/index.html  
+WARN  2019-11-14 00:37:40,095 [11   ] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported cultures 'zh-CN, zh'.
+WARN  2019-11-14 00:37:40,095 [11   ] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported UI Cultures 'zh-CN, zh'.
+INFO  2019-11-14 00:37:40,244 [11   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 150.8549ms 200 text/html
+INFO  2019-11-14 00:37:40,260 [13   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/swagger-ui.css  
+WARN  2019-11-14 00:37:40,261 [13   ] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported cultures 'zh-CN, zh'.
+WARN  2019-11-14 00:37:40,261 [13   ] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported UI Cultures 'zh-CN, zh'.
+INFO  2019-11-14 00:37:40,263 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/swagger-ui-standalone-preset.js  
+WARN  2019-11-14 00:37:40,264 [7    ] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported cultures 'zh-CN, zh'.
+WARN  2019-11-14 00:37:40,264 [7    ] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported UI Cultures 'zh-CN, zh'.
+INFO  2019-11-14 00:37:40,265 [11   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/swagger-ui-bundle.js  
+INFO  2019-11-14 00:37:40,265 [12   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/ui/abp.swagger.js  
+WARN  2019-11-14 00:37:40,265 [11   ] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported cultures 'zh-CN, zh'.
+WARN  2019-11-14 00:37:40,265 [11   ] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported UI Cultures 'zh-CN, zh'.
+INFO  2019-11-14 00:37:40,265 [10   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/ui/abp.js  
+INFO  2019-11-14 00:37:40,285 [15   ] NetCore.StaticFiles.StaticFileMiddleware - Sending file. Request path: '/swagger/ui/abp.js'. Physical path: 'E:\浏览器下载\ABP_blog_1.2\ABP_blog\4.8.0\aspnet-core\src\CC.Blog.Web.Host\wwwroot\swagger\ui\abp.js'
+INFO  2019-11-14 00:37:40,286 [15   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 20.1888ms 200 application/javascript
+INFO  2019-11-14 00:37:40,285 [6    ] NetCore.StaticFiles.StaticFileMiddleware - Sending file. Request path: '/swagger/ui/abp.swagger.js'. Physical path: 'E:\浏览器下载\ABP_blog_1.2\ABP_blog\4.8.0\aspnet-core\src\CC.Blog.Web.Host\wwwroot\swagger\ui\abp.swagger.js'
+INFO  2019-11-14 00:37:40,286 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 21.2041ms 200 application/javascript
+INFO  2019-11-14 00:37:40,293 [10   ] NetCore.StaticFiles.StaticFileMiddleware - Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+INFO  2019-11-14 00:37:40,296 [13   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 35.5454ms 200 text/css
+INFO  2019-11-14 00:37:40,312 [7    ] NetCore.StaticFiles.StaticFileMiddleware - Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+INFO  2019-11-14 00:37:40,313 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 49.165ms 200 application/javascript
+INFO  2019-11-14 00:37:40,322 [6    ] NetCore.StaticFiles.StaticFileMiddleware - Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+INFO  2019-11-14 00:37:40,322 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 57.1687ms 200 application/javascript
+INFO  2019-11-14 00:37:40,513 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/v1/swagger.json  
+WARN  2019-11-14 00:37:40,514 [6    ] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported cultures 'zh-CN, zh'.
+WARN  2019-11-14 00:37:40,514 [6    ] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported UI Cultures 'zh-CN, zh'.
+INFO  2019-11-14 00:37:40,541 [15   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/favicon-32x32.png  
+WARN  2019-11-14 00:37:40,541 [15   ] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported cultures 'zh-CN, zh'.
+WARN  2019-11-14 00:37:40,541 [15   ] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported UI Cultures 'zh-CN, zh'.
+INFO  2019-11-14 00:37:40,542 [15   ] NetCore.StaticFiles.StaticFileMiddleware - Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+INFO  2019-11-14 00:37:40,542 [15   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 1.9079ms 200 image/png
+INFO  2019-11-14 00:37:40,728 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 215.0758ms 200 application/json;charset=utf-8
+DEBUG 2019-11-14 00:43:42,271 [1    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2019-11-14 00:43:42,291 [1    ] Abp.Modules.AbpModuleManager             - Found 15 ABP modules in total.
+DEBUG 2019-11-14 00:43:42,305 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: CC.Blog.Web.Host.Startup.BlogWebHostModule, CC.Blog.Web.Host, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-11-14 00:43:42,307 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: CC.Blog.BlogWebCoreModule, CC.Blog.Web.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-11-14 00:43:42,307 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: CC.Blog.BlogApplicationModule, CC.Blog.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-11-14 00:43:42,307 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: CC.Blog.BlogCoreModule, CC.Blog.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-11-14 00:43:42,308 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCoreModule, Abp.ZeroCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-11-14 00:43:42,308 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCommonModule, Abp.Zero.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-11-14 00:43:42,308 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpKernelModule, Abp, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-11-14 00:43:42,308 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AutoMapper.AbpAutoMapperModule, Abp.AutoMapper, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-11-14 00:43:42,309 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: CC.Blog.EntityFrameworkCore.BlogEntityFrameworkModule, CC.Blog.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-11-14 00:43:42,309 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.EntityFrameworkCore.AbpZeroCoreEntityFrameworkCoreModule, Abp.ZeroCore.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-11-14 00:43:42,309 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule, Abp.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-11-14 00:43:42,309 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkCommonModule, Abp.EntityFramework.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-11-14 00:43:42,309 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.AbpAspNetCoreModule, Abp.AspNetCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-11-14 00:43:42,310 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebCommonModule, Abp.Web.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-11-14 00:43:42,310 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.SignalR.AbpAspNetCoreSignalRModule, Abp.AspNetCore.SignalR, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-11-14 00:43:42,312 [1    ] Abp.Modules.AbpModuleManager             - 15 modules loaded.
+DEBUG 2019-11-14 00:43:42,360 [1    ] o.Configuration.LanguageManagementConfig - Converted Abp (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2019-11-14 00:43:42,360 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpZero (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2019-11-14 00:43:42,360 [1    ] o.Configuration.LanguageManagementConfig - Converted Blog (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2019-11-14 00:43:42,360 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpWeb (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2019-11-14 00:43:42,600 [1    ] ameworkCore.AbpEntityFrameworkCoreModule - Registering DbContext: CC.Blog.EntityFrameworkCore.BlogDbContext, CC.Blog.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-11-14 00:43:42,948 [1    ] Abp.Localization.LocalizationManager     - Initializing 4 localization sources.
+DEBUG 2019-11-14 00:43:43,003 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Abp
+DEBUG 2019-11-14 00:43:43,040 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpZero
+DEBUG 2019-11-14 00:43:43,055 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Blog
+DEBUG 2019-11-14 00:43:43,081 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpWeb
+DEBUG 2019-11-14 00:43:43,124 [1    ] Abp.BackgroundJobs.BackgroundJobManager  - Start background worker: Castle.Proxies.BackgroundJobManagerProxy
+DEBUG 2019-11-14 00:43:43,146 [1    ] rization.Users.UserTokenExpirationWorker - Start background worker: Abp.Authorization.Users.UserTokenExpirationWorker
+DEBUG 2019-11-14 00:43:43,184 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Found 21 classes define auto mapping attributes
+DEBUG 2019-11-14 00:43:43,184 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Models.TokenAuth.ExternalLoginProviderInfoModel
+DEBUG 2019-11-14 00:43:43,190 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Users.Dto.ArticleUserDto
+DEBUG 2019-11-14 00:43:43,190 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Users.Dto.CreateUserDto
+DEBUG 2019-11-14 00:43:43,191 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Users.Dto.UserDto
+DEBUG 2019-11-14 00:43:43,191 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Sessions.Dto.TenantLoginInfoDto
+DEBUG 2019-11-14 00:43:43,191 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Sessions.Dto.UserLoginInfoDto
+DEBUG 2019-11-14 00:43:43,191 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Roles.Dto.PermissionDto
+DEBUG 2019-11-14 00:43:43,191 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.MultiTenancy.Dto.CreateTenantDto
+DEBUG 2019-11-14 00:43:43,191 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.MultiTenancy.Dto.TenantDto
+DEBUG 2019-11-14 00:43:43,191 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Blogs.DTO.ArticleCommentInput
+DEBUG 2019-11-14 00:43:43,191 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Blogs.DTO.ArticleCommentOut
+DEBUG 2019-11-14 00:43:43,192 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Blogs.DTO.ArticleCreateOrUpdate
+DEBUG 2019-11-14 00:43:43,192 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Blogs.DTO.ArticleDetailsOut
+DEBUG 2019-11-14 00:43:43,192 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Blogs.DTO.ArticleOut
+DEBUG 2019-11-14 00:43:43,192 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Blogs.DTO.ArticleTagOut
+DEBUG 2019-11-14 00:43:43,192 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Blogs.DTO.ArticleTypeInput
+DEBUG 2019-11-14 00:43:43,192 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Blogs.DTO.ArticleTypeOut
+DEBUG 2019-11-14 00:43:43,192 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Blogs.DTO.CreateProposalInput
+DEBUG 2019-11-14 00:43:43,192 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Blogs.DTO.FriendshipLinkCreateOrUpdate
+DEBUG 2019-11-14 00:43:43,192 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Blogs.DTO.FriendshipLinkOut
+DEBUG 2019-11-14 00:43:43,192 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - CC.Blog.Blogs.DTO.ProposalOut
+INFO  2019-11-14 00:43:46,478 [12   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/  
+WARN  2019-11-14 00:43:46,598 [12   ] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported cultures 'zh-CN, zh'.
+WARN  2019-11-14 00:43:46,598 [12   ] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported UI Cultures 'zh-CN, zh'.
+INFO  2019-11-14 00:43:46,696 [12   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'CC.Blog.Web.Host.Controllers.HomeController.Index (CC.Blog.Web.Host)'
+INFO  2019-11-14 00:43:47,411 [12   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {action = "Index", controller = "Home", area = ""}. Executing action CC.Blog.Web.Host.Controllers.HomeController.Index (CC.Blog.Web.Host)
+INFO  2019-11-14 00:43:47,705 [12   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method CC.Blog.Web.Host.Controllers.HomeController.Index (CC.Blog.Web.Host) - Validation state: Valid
+INFO  2019-11-14 00:43:47,709 [12   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method CC.Blog.Web.Host.Controllers.HomeController.Index (CC.Blog.Web.Host), returned result Microsoft.AspNetCore.Mvc.RedirectResult in 1.9685ms.
+INFO  2019-11-14 00:43:47,898 [7    ] vc.Infrastructure.RedirectResultExecutor - Executing RedirectResult, redirecting to /swagger.
+INFO  2019-11-14 00:43:47,907 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action CC.Blog.Web.Host.Controllers.HomeController.Index (CC.Blog.Web.Host) in 493.4002ms
+INFO  2019-11-14 00:43:47,909 [7    ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'CC.Blog.Web.Host.Controllers.HomeController.Index (CC.Blog.Web.Host)'
+INFO  2019-11-14 00:43:47,956 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 1481.7173ms 302 
+INFO  2019-11-14 00:43:47,957 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/index.html  
+WARN  2019-11-14 00:43:47,959 [7    ] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported cultures 'zh-CN, zh'.
+WARN  2019-11-14 00:43:47,959 [7    ] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported UI Cultures 'zh-CN, zh'.
+INFO  2019-11-14 00:43:48,120 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 163.5392ms 200 text/html
+INFO  2019-11-14 00:43:48,300 [10   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/v1/swagger.json  
+WARN  2019-11-14 00:43:48,300 [10   ] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported cultures 'zh-CN, zh'.
+WARN  2019-11-14 00:43:48,300 [10   ] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported UI Cultures 'zh-CN, zh'.
+INFO  2019-11-14 00:43:48,475 [10   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 175.1874ms 200 application/json;charset=utf-8
+INFO  2019-11-14 00:44:19,628 [14   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 POST http://localhost:21021/api/services/app/Blog/SearchArticlesAsync?keyWord=C%23&index=1&pageSize=10  0
+INFO  2019-11-14 00:44:19,634 [14   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2019-11-14 00:44:19,634 [14   ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+WARN  2019-11-14 00:44:19,641 [14   ] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported cultures 'zh-CN, zh'.
+WARN  2019-11-14 00:44:19,641 [14   ] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported UI Cultures 'zh-CN, zh'.
+INFO  2019-11-14 00:44:19,644 [14   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'CC.Blog.Blogs.BlogAppService.SearchArticlesAsync (CC.Blog.Application)'
+INFO  2019-11-14 00:44:19,669 [14   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {area = "app", action = "SearchArticlesAsync", controller = "Blog"}. Executing action CC.Blog.Blogs.BlogAppService.SearchArticlesAsync (CC.Blog.Application)
+INFO  2019-11-14 00:44:19,669 [14   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2019-11-14 00:44:19,669 [14   ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2019-11-14 00:44:20,154 [14   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method CC.Blog.Blogs.BlogAppService.SearchArticlesAsync (CC.Blog.Application) with arguments (C#, 1, 10) - Validation state: Valid
+INFO  2019-11-14 00:44:20,488 [5    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method CC.Blog.Blogs.BlogAppService.SearchArticlesAsync (CC.Blog.Application), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 334.3045ms.
+INFO  2019-11-14 00:44:20,531 [5    ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2019-11-14 00:44:20,551 [5    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action CC.Blog.Blogs.BlogAppService.SearchArticlesAsync (CC.Blog.Application) in 882.8133ms
+INFO  2019-11-14 00:44:20,552 [5    ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'CC.Blog.Blogs.BlogAppService.SearchArticlesAsync (CC.Blog.Application)'
+INFO  2019-11-14 00:44:20,553 [5    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 925.0085ms 200 application/json; charset=utf-8

@@ -1,0 +1,93 @@
+﻿<style>
+    /*ul > .btn {
+        padding: 0;
+    }*/
+
+    /*.btn > a {
+        padding: 6px 12px;
+    }
+
+    .btn > span {
+        padding: 6px 12px;
+    }*/
+</style>
+<div>
+    <ul>
+        @{
+            int page = ViewBag.Page;
+            int maxPage = ViewBag.MaxPage;
+            for (int i = page - 3 > 0 ? page - 3 : 1; i <= (page + 3 > maxPage ? maxPage : page + 3); i++)
+            {
+                if (i == page)
+                {
+                    <li class="btn btn-default">
+                        <span>
+                            @i
+                        </span>
+                    </li>
+                }
+                else
+                {
+                    <li class="btn btn-primary" onclick="setUrl(@(i))">
+                        <span>
+                            @i
+                        </span>
+                    </li>
+                }
+            }
+            if (page > 1)
+            {
+                <li class="btn btn-primary">
+                    <span onclick="setUrl(@(page-1))">
+                        上一页
+                    </span>
+                </li>
+            }
+            if (page < maxPage)
+            {
+                <li class="btn btn-primary">
+                    <span onclick="setUrl(@(page+1))">
+                        下一页
+                    </span>
+                </li>
+            }
+            <li class="btn btn-default">
+                <span>
+                    共 @maxPage 页
+                </span>
+            </li>
+            <li class="btn btn-default">
+                <span>
+                    共 @ViewBag.TotalCount 条
+                </span>
+            </li>
+        }
+    </ul>
+
+    <script type="text/javascript">
+        function setUrl(page) {
+            window.selectTable(page);
+            return false;//在ie6下，如果不写return false可能有问题。
+        }
+
+        function funcUrlDel(name) {
+            if (window.location.href.indexOf(name + "=") == -1) {
+                return window.location.href;
+            }
+            var loca = window.location;
+            var baseUrl = loca.origin + loca.pathname + "?";
+            var query = loca.search.substr(1);
+            if (query.indexOf(name) > -1) {
+                var obj = {}
+                var arr = query.split("&");
+                for (var i = 0; i < arr.length; i++) {
+                    arr[i] = arr[i].split("=");
+                    obj[arr[i][0]] = arr[i][1];
+                };
+                delete obj[name];
+                var url = baseUrl + JSON.stringify(obj).replace(/[\"\{\}]/g, "").replace(/\:/g, "=").replace(/\,/g, "&");
+                return url
+            };
+        }
+    </script>
+</div>

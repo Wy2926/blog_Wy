@@ -1,0 +1,65 @@
+﻿@using CC.Blog.Web.Models.Common.Modals
+@using System.Text.RegularExpressions
+@model CC.Blog.Blogs.DTO.FriendshipLinkOut
+@{
+    Layout = null;
+}
+@await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("修改友情链接")))
+<div class="modal-body">
+    <form name="FriendshipLinkEditForm" role="form" novalidate class="form-validation">
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <div class="row clearfix">
+            <div class="col-sm-12">
+                <div class="form-group form-float">
+                    <div class="form-line">
+                        <input id="link-name" type="text" name="Name" required maxlength="20" minlength="1" class="validate form-control" value="@Model.Name" />
+                        <label for="link-name" class="form-label">@L("友链名称")</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-sm-12">
+                <div class="form-group form-float">
+                    <div class="form-line">
+                        <input id="link-url" type="text" name="Url" maxlength="256" minlength="1" class="validate form-control" value="@Model.Url" />
+                        <label for="link-url" class="form-label">@L("友链地址")</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <div class="form-group form-float">
+                    <div class="form-line">
+                        <input id="link-order" type="text" name="Order" class="validate form-control" maxlength="4" value="@Model.Order" />
+                        <label for="link-order" class="form-label">@L("排序")</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <h4>@L("友链类型")</h4>
+            <div class="col-sm-12">
+                <div class="col-sm-6">
+                    <input type="radio" name="LinkType" value="0" class="filled-in" id="linkType-edit-0" @(Model.LinkType == CC.Blog.Blogs.LinkType.HomePage ? "checked" : "") />
+                    <label for="linkType-edit-0">首页</label>
+                </div>
+                <div class="col-sm-6">
+                    <input type="radio" name="LinkType" value="1" class="filled-in" id="linkType-edit-1" @(Model.LinkType == CC.Blog.Blogs.LinkType.TotalStation ? "checked" : "") />
+                    <label for="linkType-edit-1">全站</label>
+                </div>
+            </div>
+        </div>
+        @*<div class="row clearfix">
+            <div class="col-sm-12">
+                <div class="checkbox">
+                    <input type="checkbox" name="IsEnable" value="true" id="CreateActiveIsEnable" class="filled-in" @(Model.Article.IsEnable ? "checked" : "") />
+                    <label for="link-IsEnable">@L("是否启动")</label>
+                </div>
+            </div>
+        </div>*@
+    </form>
+</div>
+@await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+<script src="~/view-resources/Views/Blog/_EditFriendshipLinkModal.js" asp-append-version="true"></script>

@@ -1,0 +1,168 @@
+﻿@using CC.Blog.Web.Startup
+@using Abp.Application.Services.Dto
+@using CC.Blog.Web.Views.Shared.Components.Paging
+@model PagedResultDto<CC.Blog.AuditLogs.Dto.AuditLogListDto>
+@{
+    ViewBag.CurrentPageName = PageNames.AuditLogs; // The menu item will be active for this page.
+    var Querys = Context.Request.Query;
+}
+@section scripts
+    {
+    <environment names="Development">
+        <script src="~/view-resources/Views/AuditLog/index.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/AuditLog/index.min.js" asp-append-version="true"></script>
+    </environment>
+}
+<div class="row">
+    <form name="select" method="get" action=@Url.Action("Index","AuditLog")>
+        <div class="col-sm-12">
+            <div class='col-sm-3'>
+                <div class="form-group">
+                    <label>开始时间：</label>
+                    <!--指定 date标记-->
+                    <div class='input-group date' id='datetimepicker1'>
+                        <input type='text' class="form-control" name="startTime" value="@Querys["startTime"]" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class='col-sm-3'>
+                <div class="form-group">
+                    <label>结束时间：</label>
+                    <!--指定 date标记-->
+                    <div class='input-group date' id='datetimepicker2'>
+                        <input type='text' class="form-control" name="endTime" value="@Querys["endTime"]" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class='col-sm-3'>
+                <div class="form-group">
+                    <label>服务名称：</label>
+                    <input type='text' class="form-control" name="ServerName" value="@Querys["ServerName"]" />
+                </div>
+            </div>
+            <div class='col-sm-3'>
+                <div class="form-group">
+                    <label>方法名称：</label>
+                    <input type='text' class="form-control" name="MethodName" value="@Querys["MethodName"]" />
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class='col-sm-2'>
+                <div class="form-group">
+                    <label>最小耗时：</label>
+                    <input type='text' class="form-control" name="MinExecutionDuration" value="@Querys["MinExecutionDuration"]" />
+                </div>
+            </div>
+            <div class='col-sm-2'>
+                <div class="form-group">
+                    <label>最大耗时：</label>
+                    <input type='text' class="form-control" name="MaxExecutionDuration" value="@Querys["MaxExecutionDuration"]" />
+                </div>
+            </div>
+            <div class='col-sm-2'>
+                <div class="form-group">
+                    <label>用户ID：</label>
+                    <input type='text' class="form-control" name="UserId" value="@Querys["UserId"]" />
+                </div>
+            </div>
+            <div class='col-sm-3'>
+                <div class="form-group">
+                    <label>IP：</label>
+                    <input type='text' class="form-control" name="IP" value="@Querys["IP"]" />
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class='col-sm-12'>
+                <div class="form-group">
+                    <div class="col-sm-2">
+                        <input type="radio" name="IsException" value="" class="filled-in" id="isException-" />
+                        <label for="isException-">全部</label>
+                    </div>
+                    <div class="col-sm-2">
+                        <input type="radio" name="IsException" value="false" class="filled-in" id="isException-0" />
+                        <label for="isException-0">成功</label>
+                    </div>
+                    <div class="col-sm-2">
+                        <input type="radio" name="IsException" value="true" class="filled-in" id="isException-1" />
+                        <label for="isException-1">错误</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary waves-effect">@L("查询")</button>
+                    @*<button class="btn btn-primary waves-effect" id="clearHis">@L("清除记录")</button>*@
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="row clearfix dataTable">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    @L("审计日志")
+                </h2>
+                <ul class="header-dropdown m-r--5">
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a id="RefreshButton" href="javascript:void(0);" class="waves-effect waves-block"><i class="material-icons">refresh</i>@L("Refresh")</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="body table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>@L("用户ID")</th>
+                            <th>@L("服务名称")</th>
+                            <th>@L("动作名称")</th>
+                            <th>@L("持续时间(ms)")</th>
+                            <th>@L("IP")</th>
+                            <th>@L("客户")</th>
+                            <th>@L("时间")</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var auditLog in Model.Items)
+                        {
+                            <tr>
+                                <td>@auditLog.UserId</td>
+                                <td>@auditLog.ServiceName</td>
+                                <td>@auditLog.MethodName</td>
+                                <td>@auditLog.ExecutionDuration</td>
+                                <td>@auditLog.ClientIpAddress</td>
+                                <td>@auditLog.ClientName</td>
+                                <td>@auditLog.ExecutionTime</td>
+                                <td>
+                                    <a href="#" class="btn btn-primary waves-effect select-log" data-toggle="modal" data-auditLogId="@auditLog.Id" data-target="#AuditLogDetailsModal">查看详情</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    @await Component.InvokeAsync(typeof(PagingViewComponen))
+</div>
+
+<div class="modal fade" id="AuditLogDetailsModal" tabindex="-1" role="dialog" aria-labelledby="AuditLogDetailsModalLabel" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+

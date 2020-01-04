@@ -1,0 +1,146 @@
+﻿@using CC.Blog.Web.Startup
+@using Abp.Application.Services.Dto
+@using CC.Blog.Web.Views.Shared.Components.Paging
+@model PagedResultDto<CC.Blog.Blogs.DTO.ArticleCommentOut>
+@{
+    ViewBag.CurrentPageName = PageNames.Comment; // The menu item will be active for this page.
+}
+@section scripts
+    {
+    <environment names="Development">
+        <script src="~/view-resources/Views/Blog/comment.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Blog/comment.min.js" asp-append-version="true"></script>
+    </environment>
+}
+
+<div class="row">
+    <form name="select" method="get" action=@Url.Action("Comment","Blog")>
+        <div class='col-sm-3'>
+            <div class="form-group">
+                <label>开始时间：</label>
+                <!--指定 date标记-->
+                <div class='input-group date'>
+                    <input type='text' class="form-control" name="startTime" value="@Context.Request.Query["startTime"]" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class='col-sm-3'>
+            <div class="form-group">
+                <label>结束时间：</label>
+                <!--指定 date标记-->
+                <div class='input-group date'>
+                    <input type='text' class="form-control" name="endTime" value="@Context.Request.Query["endTime"]" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class='col-sm-2'>
+            <div class="form-group">
+                <label>IP地址：</label>
+                <input type='text' class="form-control" name="Ip" value="@Context.Request.Query["Ip"]" />
+            </div>
+        </div>
+        <div class='col-sm-6'>
+            <div class="form-group">
+                <div class="col-sm-2">
+                    <input type="radio" name="ToExamine" value="" class="filled-in" id="toExamine-" />
+                    <label for="toExamine-">全部</label>
+                </div>
+                <div class="col-sm-2">
+                    <input type="radio" name="ToExamine" value="0" class="filled-in" id="toExamine-0" />
+                    <label for="toExamine-0">未审核</label>
+                </div>
+                <div class="col-sm-2">
+                    <input type="radio" name="ToExamine" value="1" class="filled-in" id="toExamine-1" />
+                    <label for="toExamine-1">通过</label>
+                </div>
+                <div class="col-sm-2">
+                    <input type="radio" name="ToExamine" value="2" class="filled-in" id="toExamine-2" />
+                    <label for="toExamine-2">未通过</label>
+                </div>
+                <button type="submit" class="btn btn-primary waves-effect">@L("查询")</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="row clearfix dataTable">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    @L("评论")
+                </h2>
+                <ul class="header-dropdown m-r--5">
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a id="RefreshButton" href="javascript:void(0);" class="waves-effect waves-block"><i class="material-icons">refresh</i>@L("Refresh")</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="body table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>@L("评论人")</th>
+                            <th>@L("评论人邮箱")</th>
+                            <th>@L("评论内容")</th>
+                            <th>@L("站点地址")</th>
+                            <th>@L("IP地址")</th>
+                            <th>@L("CreationTime")</th>
+                            <th>@L("审核状态")</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var comment in Model.Items)
+                        {
+                            <tr>
+                                <td>@comment.NickName</td>
+                                <td>@comment.Email</td>
+                                <td>@comment.Body</td>
+                                <td>@comment.Site</td>
+                                <td>@comment.Ip</td>
+                                <td>@comment.CreationTime</td>
+                                <td>
+                                    @switch (comment.ToExamine)
+                                    {
+                                        case CC.Blog.Blogs.ToExamine.Unaudited:
+                                            <button type="button" class="btn btn-danger waves-effect" data-comment-id="@comment.Id" data-comment-title="@comment.Body" data-comment-toExamine="@((int)CC.Blog.Blogs.ToExamine.NotPass)">不通过</button>
+                                            <button type="button" class="btn btn-success waves-effect" data-comment-id="@comment.Id" data-comment-title="@comment.Body" data-comment-toExamine="@((int)CC.Blog.Blogs.ToExamine.Adopt)">通过</button>
+                                            break;
+                                        case CC.Blog.Blogs.ToExamine.Adopt:
+                                            <button type="button" class="btn btn-success waves-effect" data-comment-id="@comment.Id" data-comment-title="@comment.Body" data-comment-toExamine="@((int)CC.Blog.Blogs.ToExamine.NotPass)">已通过</button>
+                                            break;
+                                        case CC.Blog.Blogs.ToExamine.NotPass:
+                                            <button type="button" class="btn btn-danger waves-effect" data-comment-id="@comment.Id" data-comment-title="@comment.Body" data-comment-toExamine="@((int)CC.Blog.Blogs.ToExamine.Adopt)">未通过</button>
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                </td>
+                                <td class="dropdown">
+                                    <a href="#" class="waves-effect waves-block delete-comment" data-comment-id="@comment.Id" data-comment-title="@comment.Body">
+                                        <i class="material-icons">delete_sweep</i>@L("Delete")
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+    @await Component.InvokeAsync(typeof(PagingViewComponen))
+</div>
